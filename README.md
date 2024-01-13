@@ -4,7 +4,7 @@
 The program can work in two modes: inserting text into the appropriate field or uploading a DOCX file. When inserting text, roughly speaking, line breaks are removed from the text. When working with DOCX, a new document is created where all the text from the original is combined into 1 paragraph. So, it's best to use the app for continuous text that needs to be merged.
 
 ## Stack
-- Angular (16.2.12) is used for the client side. Accordingly, In addition to HTML/SCSS, Bootstrap (5.3.2) is also used for the layout.
+- Angular (17.0.10) is used for the client side. Accordingly, In addition to HTML/SCSS, Bootstrap (5.3.2) is also used for the layout.
 - The server side is built on the basis of ASP.NET Web API (.NET 7 C#)
 - It is also planned to introduce the collection of feedback, which will be stored in MS SQL Server
 
