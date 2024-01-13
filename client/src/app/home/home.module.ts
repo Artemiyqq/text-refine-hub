@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { CoreModule } from '../core/core.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { CoreModule } from '../core/core.module';
   imports: [
     CommonModule,
     CoreModule,
+    MatSnackBarModule,
   ]
 })
 export class HomeModule { }
