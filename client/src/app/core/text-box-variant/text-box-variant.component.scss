@@ -1,5 +1,23 @@
 .copy-icon {
     width: 50px;
     height: 50px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 15px;
     cursor: pointer;
+}
+
+textarea {
+    resize: none;
+    font-size: 18px;
+    padding-right: 70px;
+}
+
+.btn-secondary:focus {
+    color: white;
+}
+
+.position-relative {
+    position: relative;
 }
