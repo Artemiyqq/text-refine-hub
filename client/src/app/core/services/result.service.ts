@@ -18,11 +18,19 @@ export class ResultService {
     return this.processedTextSubject.asObservable();
   }
 
+  cleanProcessedText(): void {
+    this.processedTextSubject.next('');
+  }
+
   setLinkToProcessedFile(linkToProcessedFile: string): void{
     this.linkToProcessedFileSubject.next(linkToProcessedFile);
   }
 
   getLinkToProcessedFile(): Observable<string> {
     return this.linkToProcessedFileSubject.asObservable();
+  }
+
+  cleanLinkToProcessedFile(): void {
+    this.linkToProcessedFileSubject.next('');
   }
 }

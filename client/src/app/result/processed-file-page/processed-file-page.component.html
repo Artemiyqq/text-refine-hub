@@ -1,3 +1,11 @@
-<a [href]="linkToProcessedFile">result</a>
+<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+    <div class="row">
+        <h1>The download of the result file should start automatically. If not, click on the next <a
+                [href]="linkToProcessedFile">link</a>.</h1>
+    </div>
+    <div class="row mt-5">
+        <button (click)="backToHomePage()" class="btn btn-secondary custom-btn-size">Process another DOCX or text</button>
+    </div>
+</div>
 
 <a #downloadLink [href]="linkToProcessedFile" download style="display: none;"></a>

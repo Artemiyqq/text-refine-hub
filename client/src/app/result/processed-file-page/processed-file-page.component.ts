@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ResultService } from 'src/app/core/services/result.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class ProcessedFilePageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('downloadLink') downloadLink!: ElementRef;
 
-  constructor(private resultService: ResultService) {}
+  constructor(private resultService: ResultService,
+              private router: Router) {}
 
   ngOnInit(): void {
     this.resultService.getLinkToProcessedFile().subscribe((link => {
@@ -28,5 +30,13 @@ export class ProcessedFilePageComponent implements OnInit, AfterViewInit {
       // Programmatically click the hidden download link
       this.downloadLink.nativeElement.click();
     }
+  }
+
+  backToHomePage(): void {
+    this.router.navigate(['/home']);
+  }
+
+  ngOnDestroy(): void {
+    this.resultService.cleanProcessedText();
   }
 }
