@@ -3,37 +3,61 @@ import { HttpClient, } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { TextDTO } from '../models/text-dto.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SERVER_ERROR_CODE } from '../constants/api.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+
   private textApiUrl = `${environment.apiUrl}/Text`
   private docxApiUrl = `${environment.apiUrl}/Docx`
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private snackBar: MatSnackBar) { }
 
   async postPastedText(text: string): Promise<string> {
     const textDto: TextDTO = new TextDTO(text);
     try {
-      const result = await lastValueFrom(this.http.post(this.textApiUrl, textDto, { responseType: 'text' }));
+      const result = await this.postRequest(this.textApiUrl, textDto);
       return result as string;
-    } catch (error) {
-      console.error('Error while trying to get processed text: ', error)
-      throw error;
+    } catch (error: any) {
+      this.handleApiError(error);
+      return String(error.status);
     }
   }
 
   async postDocxFile(file: File): Promise<string> {
-    try {
-      const formData: FormData = new FormData();
-      formData.append('file', file, file.name);
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
 
-      const result = await lastValueFrom(this.http.post(this.docxApiUrl, formData, { responseType: 'text' }));
+    try {
+      const result = await this.postRequest(this.docxApiUrl, formData);
       return result as string;
-    } catch (error) {
-      console.log('Error in processing docx', error);
-      throw error;
+    } catch (error: any) {
+      this.handleApiError(error);
+      return String(error.status);
     }
+  }
+
+  async postRequest(url: string, data: any) {
+    return lastValueFrom(this.http.post(url, data, { responseType: 'text' }));
+  }
+
+  private handleApiError(error: any): void {
+    console.log('Error in API service:', error);
+
+    if (String(error.status) == SERVER_ERROR_CODE) {
+      this.showSnackBar('There is a problem with the server. Please try again later');
+    }
+  }
+
+  private showSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+        duration: 5000,
+        verticalPosition: 'top',
+        panelClass: ['custom-snackbar'],
+      });
   }
 }
